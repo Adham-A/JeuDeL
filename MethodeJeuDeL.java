@@ -6,11 +6,12 @@ public class MethodeJeuDeL {
 	
 	public static void main(String[] args) {
 		char z = '1';
-		char [][] t= new char [4][4];
-		remplirPlateauDepart(t);
-		while(!victoire(t, z)) {
+		char [][] plateau= new char [4][4];
+		remplirPlateauDepart(plateau);
+		
+		while(!victoire(plateau, z)) {
 			
-			afficherPlateau(t);
+			afficherPlateau(plateau);
 			afficherOrientationPiece();
 			
 			System.out.println("C'est au tour du joueur : " + z);
@@ -22,7 +23,7 @@ public class MethodeJeuDeL {
 			System.out.println("Entrez y : ");
 			int y = Integer.parseInt(sc.nextLine());
 			
-			while( x<1 || x>4 || y<1 || y>4 || !placementPiece(x, y, orientation, t, z)) {
+			while( x<1 || x>4 || y<1 || y>4 || !placementPiece(x, y, orientation, plateau, z)) {
 				System.out.println("Ce que vous essayez de faire n'est pas possible");
 				System.out.println("Entrez l'orientation souhaité");
 				orientation = Integer.parseInt(sc.nextLine());
@@ -31,16 +32,8 @@ public class MethodeJeuDeL {
 				System.out.println("Entrez y : ");
 				y = Integer.parseInt(sc.nextLine());
 			}
-			int choix ;
-			System.out.println("Voulez vous jouez le jeton : 1 pour oui ");
-			choix = Integer.parseInt(sc.nextLine());
-			switch (choix) {
-			case 1 :
-				System.out.println("Entrez position x y jeton");
-				int x_jeton = Integer.parseInt(sc.nextLine());
-				int y_jeton = Integer.parseInt(sc.nextLine());
-				placementJeton(x_jeton, y_jeton, t);
-			}
+			
+			placementJeton(plateau);
 			
 			
 			if (z=='1') 
@@ -353,22 +346,57 @@ public class MethodeJeuDeL {
 	
 	}
 	
-	public static boolean placementJeton(int x,int y,char[][] plateau) {
-		x--;
-		y--;
+	public static boolean verificationCoordonneesJeton(int x, int y,char[][] plateau) {
 		if(plateau[x][y]!='*')
 			return false;
-		
-		System.out.println("Entrez x : ");
-		int x_jeton = Integer.parseInt(sc.nextLine());
-		System.out.println("Entrez y : ");
-		int y_jeton = Integer.parseInt(sc.nextLine());
-		
-		if(plateau[x_jeton-1][y_jeton-1]=='-') {
-			plateau[x_jeton-1][y_jeton-1] ='*';
-			plateau[x][y]='-';
-			return true;
-		}
-		return false;
+		return true;
 	}
+	
+	public static void placementJeton(char[][] plateau) {
+	
+		int x,y;
+		int x_jeton;
+		int y_jeton;
+		char choix ;
+		System.out.println("Voulez vous jouez le jeton : entrez oui ou non ");
+		choix = sc.nextLine().charAt(0);
+		
+		
+		
+		
+		
+		switch (choix) {
+		case 'o' :
+			do{
+				System.out.println("Entrez position x actuelle du jeton");
+				x = Integer.parseInt(sc.nextLine());
+				System.out.println("Entrez position y actuelle du jeton");
+				y = Integer.parseInt(sc.nextLine());
+				x--;
+				y--;
+				
+				if(x<0 ||x>3 || y>3 || y<0 || !verificationCoordonneesJeton(x, y, plateau))
+					System.out.println("Erreur recommencez");
+				
+			}while(x<0 ||x>3 || y>3 || y<0 && !verificationCoordonneesJeton(x, y, plateau));
+			
+			
+			do {
+				
+				System.out.println("Entrez la nouvelle position du jeton : ");
+				x_jeton = Integer.parseInt(sc.nextLine());
+				x_jeton--;
+				System.out.println("Entrez y : ");
+				y_jeton = Integer.parseInt(sc.nextLine());
+				y_jeton--;
+			
+				if (x_jeton<0 ||x_jeton>3 || y_jeton>3 || y_jeton<0 || plateau[x_jeton][y_jeton]!='-' )
+					System.out.println("Erreur recommencez !");
+			} while(x_jeton<0 ||x_jeton>3 || y_jeton>3 || y_jeton<0 || plateau[x_jeton][y_jeton]!='-' );
+			
+			plateau[x_jeton][y_jeton] ='*';
+			plateau[x][y]='-';	
+			}
+	}
+
 }
