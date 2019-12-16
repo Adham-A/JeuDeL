@@ -328,7 +328,7 @@ public class MethodeJeuDeL {
 		enleverPieceJoueurDuPlateau(plateauSansL, charJoueur);
 		
 		for(int x = 0; x<longeur ; x++) 
-			for (int y = 2 ; y<hauteur ;y++) 
+			for (int y = 0 ; y<hauteur ;y++) 
 					for(int orientation=1;orientation<5 ;orientation++) {
 						if(verification(x, y, orientation, plateauSansL, charJoueur))
 						nbrpossibilite++;
@@ -337,7 +337,7 @@ public class MethodeJeuDeL {
 					}
 		
 		for (int y=0; y<hauteur ; y++)
-			for (int x=0;x<longeur-2;x++)
+			for (int x=0;x<longeur;x++)
 					for(int orientation=5;orientation<9 ;orientation++) {
 						if(verification(x, y, orientation, plateauSansL, charJoueur))
 							nbrpossibilite++;
@@ -384,7 +384,7 @@ public class MethodeJeuDeL {
 			}while(x<0 ||x>3 || y>3 || y<0 || !verificationCoordonneesJeton(x, y, plateau));
 			
 			do {
-				System.out.println("Entrez la nouvelle position du jeton : \nEntrez x: ");
+				System.out.println("Entrez la nouvelle position du jeton  \nEntrez x: ");
 				x_jeton = Integer.parseInt(sc.nextLine());
 				x_jeton--;
 				
