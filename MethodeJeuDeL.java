@@ -18,9 +18,9 @@ public class MethodeJeuDeL {
 			
 			System.out.println("Entrez l'orientation souhaité");
 			int orientation = Integer.parseInt(sc.nextLine());
-			System.out.println("Entrez x :");
+			System.out.println("Entrez x du coin :");
 			int x = Integer.parseInt(sc.nextLine());
-			System.out.println("Entrez y : ");
+			System.out.println("Entrez y du coin: ");
 			int y = Integer.parseInt(sc.nextLine());
 			
 			while( x<1 || x>4 || y<1 || y>4 || !placementPiece(x, y, orientation, plateau, z)) {
@@ -41,6 +41,8 @@ public class MethodeJeuDeL {
 			else 
 				z='1';	
 			}
+		
+			afficherPlateau(plateau);
 		if(z=='1')
 			System.out.println("VICTOIRE du joueur 2");
 		else
