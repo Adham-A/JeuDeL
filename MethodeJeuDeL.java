@@ -41,9 +41,10 @@ public class MethodeJeuDeL {
 			else 
 				z='1';	
 			}
-		
-		System.out.println("VICTOIRE");
-	
+		if(z=='1')
+			System.out.println("VICTOIRE du joueur 2");
+		else
+			System.out.println("VICTOIRE du joueur 1");
 	}
 	
 	public static void remplirPlateauDepart(char[][] t) {
@@ -378,14 +379,13 @@ public class MethodeJeuDeL {
 				if(x<0 ||x>3 || y>3 || y<0 || !verificationCoordonneesJeton(x, y, plateau))
 					System.out.println("Erreur recommencez");
 				
-			}while(x<0 ||x>3 || y>3 || y<0 && !verificationCoordonneesJeton(x, y, plateau));
-			
+			}while(x<0 ||x>3 || y>3 || y<0 || !verificationCoordonneesJeton(x, y, plateau));
 			
 			do {
-				
-				System.out.println("Entrez la nouvelle position du jeton : ");
+				System.out.println("Entrez la nouvelle position du jeton : \nEntrez x: ");
 				x_jeton = Integer.parseInt(sc.nextLine());
 				x_jeton--;
+				
 				System.out.println("Entrez y : ");
 				y_jeton = Integer.parseInt(sc.nextLine());
 				y_jeton--;
