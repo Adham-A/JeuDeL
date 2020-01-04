@@ -1,12 +1,13 @@
 
 public class MenuJeuDeL {
+	
 	public static void menu() {
 
 		char charJoueur = '1';
 		char [][] plateau= new char [4][4];
 		int difficulte;
-		MethodeJeuDeL.remplirPlateauDepart(plateau);
 		
+		MethodeJeuDeL.remplirPlateauDepart(plateau);
 		MethodeJeuDeL.tutoriel();
 		
 		difficulte=MethodeJeuDeL.selectionnerdifficulte();
@@ -32,23 +33,14 @@ public class MenuJeuDeL {
 						MethodeJeuDeL.placementJeton(plateau);
 					}
 					else {
-						System.out.println("L'ordinateur joue ///////////////////////////////////// \n");
+						System.out.println(" ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░\r\n" + 
+								"	L'ordinateur joue\r\n" + 
+								" ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░");
 						MethodeJeuDeL.placementOrdinateur(plateau,charJoueur,difficulte);
-						
 					}
 						
 					break;			
 			}
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
 			if (charJoueur=='1') 
 				charJoueur='2';
 			else 

@@ -31,19 +31,19 @@ public class MethodeJeuDeL {
 		}
 	}
 	
-	public static char[][] copiePlateau(char[][] t){
+	public static char[][] copiePlateau(char[][] plateau){
 		char[][] copie = new char[4][4];
-		for (int y=0; y<t[0].length;y++) 
-			for (int x=0 ; x<t.length ; x++)
-				copie[x][y] = t[x][y];
+		for (int y=0; y<plateau[0].length;y++) 
+			for (int x=0 ; x<plateau.length ; x++)
+				copie[x][y] = plateau[x][y];
 		return copie;
 	}
 	
-	public static void afficherPlateau(char[][] t) {
-		for (int y=0; y<t[0].length;y++) {
+	public static void afficherPlateau(char[][] plateau) {
+		for (int y=0; y<plateau[0].length;y++) {
 			System.out.print((y+1)+"| ");
-			for (int x=0 ; x<t.length ; x++)
-				System.out.print(t[x][y] + " ");
+			for (int x=0 ; x<plateau.length ; x++)
+				System.out.print(plateau[x][y] + " ");
 			System.out.println();
 		}
 		System.out.println("   ̅1̅ ̅2̅ ̅3̅ ̅4");
@@ -59,12 +59,10 @@ public class MethodeJeuDeL {
 	}
 	
 	public static void enleverPieceJoueurDuPlateau(char[][] plateau, char charJoueur){
-		
 		for (int y=0; y<plateau[0].length;y++) 
 			for (int x=0 ; x<plateau.length ; x++)
 				if(plateau[x][y] == charJoueur)
 					plateau[x][y] = '-';
-		
 	}
 	
 	public static boolean verification(int x, int y, int orientationPiece,char[][] plateauSansL, char charJoueur) {
@@ -384,8 +382,8 @@ public class MethodeJeuDeL {
 		System.out.println("Bienvenue dans le jeu de L, \r\n" + 
 				"C'est un jeu inventé par Edward de Bono en 1968 qui fait appel à la pensée stratégique.\r\n" + 
 				"Tour à tour chaque joueur peut déplacer son tétromino en forme de L sur le terrain.\r\n" + 
-				"Après avoir deplaçé sa pièce un joueur peut décider ou non de bouger un des jetons neutres symbolisés par :  '*' \r\n" + 
-				"Le but du jeu est d'empecher l'adversaire d'avoir des déplacements restants.\r\n" + 
+				"Après avoir déplacé sa pièce un joueur peut décider ou non de bouger un des jetons neutres symbolisés par :  '*' \r\n" + 
+				"Le but du jeu est d'empêcher l'adversaire d'avoir des déplacements restants.\r\n" + 
 				"Exemple : \r\n" + 
 				"\r\n" + 
 				"1| - - * - \r\n" + 
@@ -402,16 +400,16 @@ public class MethodeJeuDeL {
 				"\r\n" + 
 				"     *\r\n" + 
 				"     *    ---> ***\r\n" + 
-				"---> **        *\n");
+				"---> **        *");
 	}
 	
 	public static int selectionnerdifficulte() {
 		
 		int choix;
 		System.out.println("1.Jouer contre un humain\r\n" + 
-				"2.Jouer contre une IA (facile)\r\n" + 
-				"3.Jouer contre une IA (moyen)\r\n" + 
-				"4.Jouer contre une IA (difficile)");
+				"2.Jouer contre l'ordinateur (facile)\r\n" + 
+				"3.Jouer contre l'ordinateur (moyen)\r\n" + 
+				"4.Jouer contre l'odrinateur (difficile)");
 		choix = Integer.parseInt(sc.nextLine());
 		
 		while( choix<1 || choix>4) {
@@ -430,10 +428,10 @@ public class MethodeJeuDeL {
 		
 		switch(difficulte) {
 		case 2 :
-			placementOrdinateurFacile(plateau,charJoueur);
+			placementOrdinateurFacile(plateau,charJoueur); // Joue aléatoirement
 			break;
 		case 3 :
-			
+			placementOrdinateurMoyen(plateau, charJoueur); // Joue aléatoirement sauf s'il y a un coup meurtrier
 			break;
 		case 4 :
 			
@@ -466,7 +464,7 @@ public class MethodeJeuDeL {
 
 		}		
 	
-	public static int [] placerCoordonneesJetonsDansTableau(char[][] plateau) {
+	public static int[] placerCoordonneesJetonsDansTableau(char[][] plateau) {
 		int indextableau = 0;
 		int[] tableauCoordonnees;
 		tableauCoordonnees = new int[4];
@@ -501,86 +499,161 @@ public class MethodeJeuDeL {
 		}
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	public static void placementOrdinateurMoyen(char[][] plateau,char charJoueur) {
+	
+		int[] tableauCoordonneesPieceJeton = chercherCoupGagnant(plateau, charJoueur);
+		if (tableauCoordonneesPieceJeton[8]==1) {
+			int xPiece = tableauCoordonneesPieceJeton[0]+1;
+			int yPiece = tableauCoordonneesPieceJeton[1]+1;
+			int orientationPiece = tableauCoordonneesPieceJeton[2];
+			placementPiece(xPiece, yPiece, orientationPiece, plateau, charJoueur);
+			
+			if (tableauCoordonneesPieceJeton[7]==1) {
+				int xJetonInitial =  tableauCoordonneesPieceJeton[3];
+				int yJetonInitial = tableauCoordonneesPieceJeton[4];
+				int nouveauXJeton =  tableauCoordonneesPieceJeton[5];
+				int nouveauYJeton =  tableauCoordonneesPieceJeton[6];
+				placementJetonOrdinateur(plateau, xJetonInitial, yJetonInitial, nouveauXJeton, nouveauYJeton);
+			}
+		}
+		else {
+		placementOrdinateurFacile(plateau, charJoueur);
+		}
+		
+	}
+	
+	public static int[] chercherCoupGagnant(char[][] plateau,char charJoueur) {
+		int[] tableauresultat = {0,0,0,0,0,0,0,0,0}; 
+		
+		/*x,y,orientation,xJeton,yJeton,nouveauXJeton,nouveauYJeton,booleenJeton,booleenCoupGagnant
+		*
+		* BooleenJeton permet de savoir s'il faut déplaçer un jeton
+		* xJeton et yJeton donne les coordonnées du jeton à déplaçer
+		* 
+		*/
+		
+		char [][] plateauDeTest = copiePlateau(plateau) ;
+		int [] resultatJeton;
+		
+		for(int x = 0; x<4 ; x++)  {
+			for (int y = 0; y<4 ;y++) {
+					for(int orientation=1;orientation<9 ;orientation++) {
+						if(placementPiece(x+1, y+1, orientation, plateauDeTest, charJoueur)) {
+							if(charJoueur=='2') {
+								charJoueur='1';
+							}
+							else{
+								charJoueur='2';
+							}
+							
+							if(victoire(plateauDeTest, charJoueur)) {
+								tableauresultat[0] = x;
+								tableauresultat[1] = y;
+								tableauresultat[2] = orientation;
+								tableauresultat[8] = 1 ;
+								return tableauresultat;
+							}
+							
+							resultatJeton = chercherJetonGagnant(plateauDeTest, charJoueur);
+							if (resultatJeton[4]==1) { //BooleenPlacementJeton
+								tableauresultat[0] = x;
+								tableauresultat[1] = y;
+								tableauresultat[2] = orientation;
+								tableauresultat[3] = resultatJeton[0];
+								tableauresultat[4] = resultatJeton[1];
+								tableauresultat[5] = resultatJeton[2];
+								tableauresultat[6] = resultatJeton[3];
+								tableauresultat[7] = resultatJeton[4];
+								tableauresultat[8] = 1 ;
+								return tableauresultat;
+							}
+							
+							if(charJoueur=='1') {
+								charJoueur='2';
+							}
+							else{
+								charJoueur='1';
+							}
+						}
+					}
+			}
+		}
+		
+		return tableauresultat;
+	}
+	
+	
+	public static int[] chercherJetonGagnant(char[][] plateau,char charJoueur) {
+		int[] resultatJeton = {0,0,0,0,0};
+		/*xInitialJeton,yInitialJeton,nouveauXJeton,nouveauYJeton,booleenJeton
+		*
+		* booleenJeton permet de savoir s'il faut déplacer un jeton
+		*/
+		
+		//Permet de sauvegarder la position initial des Jetons pour les replacer lorsqu'on vérifie toutes les positions possibles des autres Jetons.
+		int[] CoordonneesJetons = placerCoordonneesJetonsDansTableau(plateau);
+		int xInitialPremierJeton = CoordonneesJetons[0];
+		int yInitialPremierJeton = CoordonneesJetons[1];
+		int xInitialDeuxiemeJeton = CoordonneesJetons[2];
+		int yInitialDeuxiemeJeton = CoordonneesJetons[3];
+		
+		//Change le premier Jeton en un caractère '-'  afin de permettre de tester les possibilités avec le premier jeton
+		plateau[xInitialPremierJeton][yInitialPremierJeton] = '-';
+		
+		for(int xJeton = 0; xJeton<4 ; xJeton++)  {
+			for (int yJeton = 0 ; yJeton<4 ;yJeton++) {
+				if(plateau[xJeton][yJeton]=='-') {
+					plateau[xJeton][yJeton]='*' ;
+					if(victoire(plateau, charJoueur)) {
+						resultatJeton[0] = xInitialPremierJeton;
+						resultatJeton[1] = yInitialPremierJeton;
+						resultatJeton[2] = xJeton;
+						resultatJeton[3] = yJeton;
+						resultatJeton[4] = 1;
+						plateau[xJeton][yJeton]='-';
+						plateau[xInitialPremierJeton][yInitialPremierJeton]='*';
+						plateau[xInitialDeuxiemeJeton][yInitialDeuxiemeJeton]='*';
+						return resultatJeton;
+					}
+					plateau[xJeton][yJeton]='-';
+				}
+			}
+		}
+		
+		// Change le deuxieme Jeton en un caractère '-'  afin de permettre de tester les possibilités avec le deuxieme jeton
+		plateau[xInitialDeuxiemeJeton][yInitialDeuxiemeJeton]='-';
+		//Replace le Jeton 1
+		plateau[xInitialPremierJeton][yInitialPremierJeton] = '*';
+	
+		for(int xJeton = 0; xJeton<4 ; xJeton++)  {
+			for (int yJeton = 0 ; yJeton<4 ;yJeton++) {
+				if(plateau[xJeton][yJeton]=='-') {
+					plateau[xJeton][yJeton]='*' ;
+					if(victoire(plateau, charJoueur)) {
+						resultatJeton[0] = xInitialDeuxiemeJeton;
+						resultatJeton[1] = yInitialDeuxiemeJeton;
+						resultatJeton[2] = xJeton;
+						resultatJeton[3] = yJeton;
+						resultatJeton[4] = 1;
+						plateau[xJeton][yJeton]='-';
+						plateau[xInitialPremierJeton][yInitialPremierJeton]='*';
+						plateau[xInitialDeuxiemeJeton][yInitialDeuxiemeJeton]='*';
+						return resultatJeton;
+					}
+					plateau[xJeton][yJeton]='-';
+				}
+			}
+		}
+		
+		//Replace le jeton 2
+		plateau[xInitialDeuxiemeJeton][yInitialDeuxiemeJeton]='*';
+		
+		return resultatJeton;
+	}
+
+	public static void placementJetonOrdinateur(char[][] plateau,int xJeton,int yJeton, int nouveauXJeton, int nouveauYJeton) {
+		plateau[xJeton][yJeton] = '-';
+		plateau[nouveauXJeton][nouveauYJeton] = '*';
+	}
+
 }
