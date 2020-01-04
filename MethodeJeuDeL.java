@@ -3,52 +3,7 @@ import java.util.Scanner;
 
 public class MethodeJeuDeL {
 	static Scanner sc = new Scanner(System.in);
-	
-	public static void main(String[] args) {
-		char z = '1';
-		char [][] plateau= new char [4][4];
-		remplirPlateauDepart(plateau);
-		
-		while(!victoire(plateau, z)) {
-			
-			afficherPlateau(plateau);
-			afficherOrientationPiece();
-			
-			System.out.println("C'est au tour du joueur : " + z);
-			
-			System.out.println("Entrez l'orientation souhaité");
-			int orientation = Integer.parseInt(sc.nextLine());
-			System.out.println("Entrez x du coin :");
-			int x = Integer.parseInt(sc.nextLine());
-			System.out.println("Entrez y du coin: ");
-			int y = Integer.parseInt(sc.nextLine());
-			
-			while( x<1 || x>4 || y<1 || y>4 || !placementPiece(x, y, orientation, plateau, z)) {
-				System.out.println("Ce que vous essayez de faire n'est pas possible");
-				System.out.println("Entrez l'orientation souhaité");
-				orientation = Integer.parseInt(sc.nextLine());
-				System.out.println("Entrez x :");
-				x = Integer.parseInt(sc.nextLine());
-				System.out.println("Entrez y : ");
-				y = Integer.parseInt(sc.nextLine());
-			}
-			
-			placementJeton(plateau);
-			
-			
-			if (z=='1') 
-				z='2';
-			else 
-				z='1';	
-			}
-		
-			afficherPlateau(plateau);
-		if(z=='1')
-			System.out.println("VICTOIRE du joueur 2");
-		else
-			System.out.println("VICTOIRE du joueur 1");
-	}
-	
+
 	public static void remplirPlateauDepart(char[][] t) {
 		
 		//Jetons neutres
@@ -317,6 +272,26 @@ public class MethodeJeuDeL {
 					plateau[i][j] = plateauSansL[i][j];
 			return true;	
 	}
+	
+	public static void placementJoueur(char[][] plateau, char charJoueur) {
+		
+		System.out.println("Entrez l'orientation souhaité : ");
+		int orientation = Integer.parseInt(sc.nextLine());
+		System.out.println("Entrez x du coin : ");
+		int x = Integer.parseInt(sc.nextLine());
+		System.out.println("Entrez y du coin : ");
+		int y = Integer.parseInt(sc.nextLine());
+		
+		while( x<1 || x>4 || y<1 || y>4 || !placementPiece(x, y, orientation, plateau, charJoueur)) {
+			System.out.println("Ce que vous essayez de faire n'est pas possible");
+			System.out.println("Entrez l'orientation souhaité");
+			orientation = Integer.parseInt(sc.nextLine());
+			System.out.println("Entrez x du coin : ");
+			x = Integer.parseInt(sc.nextLine());
+			System.out.println("Entrez y du coin : ");
+			y = Integer.parseInt(sc.nextLine());
+		}
+	}
 
 	public static boolean victoire(char[][] plateau, char charJoueur){
 		
@@ -357,48 +332,255 @@ public class MethodeJeuDeL {
 	
 	public static void placementJeton(char[][] plateau) {
 	
-		int x,y;
-		int x_jeton;
-		int y_jeton;
-		char choix ;
-		System.out.println("Voulez vous jouez le jeton : entrez oui ou non ");
-		choix = sc.nextLine().charAt(0);
+		int x,y; //Coordonnees ou le jeton est 
+		int x_jeton,y_jeton; //Coordonnees ou l'on veut placer le jeton
+		String choix;
 		
+		afficherPlateau(plateau);
+		System.out.println("Voulez vous jouez le jeton : entrez oui/non ");
+		choix = sc.nextLine();
 		
-		
-		
+		while( !choix.equals("oui") && !choix.equals("non") )  {
+			System.out.println("Voulez vous jouez le jeton : entrez oui/non ");
+			choix = sc.nextLine();
+		}
 		
 		switch (choix) {
-		case 'o' :
-			do{
-				System.out.println("Entrez position x actuelle du jeton");
-				x = Integer.parseInt(sc.nextLine());
-				System.out.println("Entrez position y actuelle du jeton");
-				y = Integer.parseInt(sc.nextLine());
-				x--;
-				y--;
-				
-				if(x<0 ||x>3 || y>3 || y<0 || !verificationCoordonneesJeton(x, y, plateau))
-					System.out.println("Erreur recommencez");
-				
-			}while(x<0 ||x>3 || y>3 || y<0 || !verificationCoordonneesJeton(x, y, plateau));
+			case "oui" :
+				do{
+					System.out.println("Entrez position x actuelle du jeton : ");
+					x = Integer.parseInt(sc.nextLine());
+					System.out.println("Entrez position y actuelle du jeton : ");
+					y = Integer.parseInt(sc.nextLine());
+					x--;
+					y--;
+					
+					if(x<0 ||x>3 || y>3 || y<0 || !verificationCoordonneesJeton(x, y, plateau))
+						System.out.println("Erreur recommencez \n");
+					
+				}while(x<0 ||x>3 || y>3 || y<0 || !verificationCoordonneesJeton(x, y, plateau));
 			
-			do {
-				System.out.println("Entrez la nouvelle position du jeton  \nEntrez x: ");
-				x_jeton = Integer.parseInt(sc.nextLine());
-				x_jeton--;
+				do {
+					System.out.println("Entrez la nouvelle position du jeton :\nEntrez x : ");
+					x_jeton = Integer.parseInt(sc.nextLine());
+					x_jeton--;
+					
+					System.out.println("Entrez y : ");
+					y_jeton = Integer.parseInt(sc.nextLine());
+					y_jeton--;
 				
-				System.out.println("Entrez y : ");
-				y_jeton = Integer.parseInt(sc.nextLine());
-				y_jeton--;
-			
-				if (x_jeton<0 ||x_jeton>3 || y_jeton>3 || y_jeton<0 || plateau[x_jeton][y_jeton]!='-' )
-					System.out.println("Erreur recommencez !");
-			} while(x_jeton<0 ||x_jeton>3 || y_jeton>3 || y_jeton<0 || plateau[x_jeton][y_jeton]!='-' );
-			
-			plateau[x_jeton][y_jeton] ='*';
-			plateau[x][y]='-';	
-			}
+					if (x_jeton<0 ||x_jeton>3 || y_jeton>3 || y_jeton<0 || plateau[x_jeton][y_jeton]!='-' )
+						System.out.println("Erreur recommencez \n");
+					
+				} while(x_jeton<0 ||x_jeton>3 || y_jeton>3 || y_jeton<0 || plateau[x_jeton][y_jeton]!='-' );
+				
+				plateau[x_jeton][y_jeton] ='*';
+				plateau[x][y]='-';	
+		}
+		System.out.println();
 	}
 
+	public static void tutoriel() {
+		System.out.println("Bienvenue dans le jeu de L, \r\n" + 
+				"C'est un jeu inventé par Edward de Bono en 1968 qui fait appel à la pensée stratégique.\r\n" + 
+				"Tour à tour chaque joueur peut déplacer son tétromino en forme de L sur le terrain.\r\n" + 
+				"Après avoir deplaçé sa pièce un joueur peut décider ou non de bouger un des jetons neutres symbolisés par :  '*' \r\n" + 
+				"Le but du jeu est d'empecher l'adversaire d'avoir des déplacements restants.\r\n" + 
+				"Exemple : \r\n" + 
+				"\r\n" + 
+				"1| - - * - \r\n" + 
+				"2| 2 2 2 - \r\n" + 
+				"3| 1 - 2 - \r\n" + 
+				"4| 1 1 1 * \r\n" + 
+				"   ̅1̅ ̅2̅ ̅3̅ ̅4\r\n" + 
+				"\r\n" + 
+				"Ici c'est le tour du joueur 1 et il ne possède plus aucun valide il a donc perdu.\r\n" + 
+				"\r\n" + 
+				"Le coin d'un tétromino est utilisé pour placer sa pièce :\r\n" + 
+				"\r\n" + 
+				"Exemple : \r\n" + 
+				"\r\n" + 
+				"     *\r\n" + 
+				"     *    ---> ***\r\n" + 
+				"---> **        *\n");
+	}
+	
+	public static int selectionnerdifficulte() {
+		
+		int choix;
+		System.out.println("1.Jouer contre un humain\r\n" + 
+				"2.Jouer contre une IA (facile)\r\n" + 
+				"3.Jouer contre une IA (moyen)\r\n" + 
+				"4.Jouer contre une IA (difficile)");
+		choix = Integer.parseInt(sc.nextLine());
+		
+		while( choix<1 || choix>4) {
+			System.out.println("Erreur de sélection : \n ");
+			System.out.println("1.Jouer contre un humain\r\n" + 
+					"2.Jouer contre une IA (facile)\r\n" + 
+					"3.Jouer contre une IA (moyen)\r\n" + 
+					"4.Jouer contre une IA (difficile)");
+			choix = Integer.parseInt(sc.nextLine());
+		}
+		
+		return choix;
+	}
+	
+	public static void placementOrdinateur(char[][] plateau,char charJoueur,int difficulte) {
+		
+		switch(difficulte) {
+		case 2 :
+			placementOrdinateurFacile(plateau,charJoueur);
+			break;
+		case 3 :
+			
+			break;
+		case 4 :
+			
+			break;
+		}
+		
+	}
+	
+	public static void placementJetonOrdinateurAleatoire(char[][] plateau) {
+		
+		int[] coordonnees = placerCoordonneesJetonsDansTableau(plateau);
+		int x,y,nouveauX,nouveauY;
+		
+		if ((int)(Math.random()*2)==1) {
+			x = coordonnees[0];
+			y = coordonnees[1];
+		}
+		else {
+			x = coordonnees[2];
+			y = coordonnees[3];
+		}
+		
+		do {
+			nouveauX = (int)(Math.random()*4);
+			nouveauY = (int)(Math.random()*4);
+		}while(plateau[nouveauX][nouveauY]!='-');
+			
+		plateau[nouveauX][nouveauY] = '*' ;
+		plateau[x][y] = '-' ;
+
+		}		
+	
+	public static int [] placerCoordonneesJetonsDansTableau(char[][] plateau) {
+		int indextableau = 0;
+		int[] tableauCoordonnees;
+		tableauCoordonnees = new int[4];
+		for (int i = 0; i < plateau.length; i++) {
+			for (int j = 0; j < plateau[0].length; j++) {
+				if (plateau[i][j]=='*') {
+					tableauCoordonnees[indextableau] = i;
+					tableauCoordonnees[indextableau+1] = j;
+					indextableau+=2;
+				}
+				if (indextableau==4) {
+					return tableauCoordonnees;
+				}
+			}
+		}
+		return tableauCoordonnees;
+	
+	}
+	
+	public static void placementOrdinateurFacile(char[][] plateau,char charJoueur) {
+		int x;
+		int y;
+		int orientation;	
+		do {
+			x = (int)(Math.random()*4)+1;
+			y = (int)(Math.random()*4)+1;
+			orientation = (int)(Math.random()*8)+1;	
+		}while(!placementPiece(x, y, orientation, plateau, charJoueur));
+		
+		if ( (int)(Math.random()*2)==1) {
+			placementJetonOrdinateurAleatoire(plateau);
+		}
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
