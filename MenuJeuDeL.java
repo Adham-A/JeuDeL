@@ -35,7 +35,7 @@ public class MenuJeuDeL {
 					else {
 						System.out.println(" ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░\r\n" + 
 								"	L'ordinateur joue\r\n" + 
-								" ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░");
+								" ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ \n");
 						MethodeJeuDeL.placementOrdinateur(plateau,charJoueur,difficulte);
 					}
 						
@@ -50,9 +50,10 @@ public class MenuJeuDeL {
 		MethodeJeuDeL.afficherPlateau(plateau);
 		
 		if(charJoueur=='1')
-			System.out.println("VICTOIRE du joueur 2");
+			System.out.println("Victoire du joueur 2");
 		else
-			System.out.println("VICTOIRE du joueur 1");
+			System.out.println("Victoire du joueur 1");
 
 	}
+	
 }
