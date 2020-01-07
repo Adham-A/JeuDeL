@@ -1,4 +1,3 @@
-
 import java.util.Scanner;
 
 public class MethodeJeuDeL {
@@ -47,6 +46,7 @@ public class MethodeJeuDeL {
 			System.out.println();
 		}
 		System.out.println("   ̅1̅ ̅2̅ ̅3̅ ̅4");
+		System.out.println();
 	}
 	
 	public static void afficherOrientationPiece() {
@@ -291,6 +291,7 @@ public class MethodeJeuDeL {
 			System.out.println("Entrez y du coin : ");
 			y = Integer.parseInt(sc.nextLine());
 		}
+		System.out.println();
 	}
 
 	public static boolean victoire(char[][] plateau, char charJoueur){
@@ -350,7 +351,7 @@ public class MethodeJeuDeL {
 				}while(x<0 ||x>3 || y>3 || y<0 || !verificationCoordonneesJeton(x, y, plateau));
 			
 				do {
-					System.out.println("Entrez la nouvelle position du jeton :\nEntrez x : ");
+					System.out.println("Entrez la nouvelle position du jeton :\n\nEntrez x : ");
 					x_jeton = Integer.parseInt(sc.nextLine());
 					x_jeton--;
 					
@@ -392,7 +393,7 @@ public class MethodeJeuDeL {
 				"\r\n" + 
 				"     *\r\n" + 
 				"     *    ---> ***\r\n" + 
-				"---> **        *");
+				"---> **        * \n");
 	}
 	
 	public static int selectionnerdifficulte() {
@@ -413,6 +414,7 @@ public class MethodeJeuDeL {
 			choix = Integer.parseInt(sc.nextLine());
 		}
 		
+		System.out.println();
 		return choix;
 	}
 	

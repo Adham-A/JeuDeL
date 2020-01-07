@@ -34,9 +34,9 @@ public class MenuJeuDeL {
 						MethodeJeuDeL.placementJeton(plateau);
 					}
 					else {
-						System.out.println(" ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░\r\n" + 
+						System.out.println(" ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░\r\n" + 
 								"	L'ordinateur joue\r\n" + 
-								" ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ \n");
+								" ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ \n");
 						MethodeJeuDeL.placementOrdinateur(plateau,charJoueur,difficulte);
 					}
 						
