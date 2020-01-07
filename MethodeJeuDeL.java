@@ -396,6 +396,18 @@ public class MethodeJeuDeL {
 				"---> **        * \n");
 	}
 	
+	public static String saisiePseudo() {
+		System.out.println("Saississez votre pseudo :");
+		String pseudo = sc.nextLine();
+		
+		while(pseudo.isEmpty()) {
+			System.out.println("Saississez votre pseudo :");
+			pseudo = sc.nextLine();
+		}
+		System.out.println();
+		return pseudo;
+	}
+	
 	public static int selectionnerdifficulte() {
 		
 		int choix;
