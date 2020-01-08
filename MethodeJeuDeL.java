@@ -201,10 +201,7 @@ public class MethodeJeuDeL {
 
 	public static boolean placementPiece(int x, int y, int orientationPiece,char[][] plateau, char charJoueur) {
 		//Cette méthode place une piece à des coordonnées avec son orientation si c'est possible et renvoie true sinon renvoie false
-		
-		x-=1; //Change x vers son indice dans le tableau		
-		y-=1; //Change y vers son indice dans le tableau
-		
+			
 		char[][] plateauSansL = copiePlateau(plateau);
 		enleverPieceJoueurDuPlateau(plateauSansL, charJoueur);
 		
@@ -281,8 +278,8 @@ public class MethodeJeuDeL {
 		int x = Integer.parseInt(sc.nextLine());
 		System.out.println("Entrez y du coin : ");
 		int y = Integer.parseInt(sc.nextLine());
-		
-		while( x<1 || x>4 || y<1 || y>4 || !placementPiece(x, y, orientation, plateau, charJoueur)) {
+	
+		while( x<1 || x>4 || y<1 || y>4 || !placementPiece(x-1, y-1, orientation, plateau, charJoueur)) {
 			System.out.println("Ce que vous essayez de faire n'est pas possible");
 			System.out.println("Entrez l'orientation souhaité");
 			orientation = Integer.parseInt(sc.nextLine());
@@ -494,9 +491,9 @@ public class MethodeJeuDeL {
 		int y;
 		int orientation;	
 		do {
-			x = (int)(Math.random()*4)+1;
-			y = (int)(Math.random()*4)+1;
-			orientation = (int)(Math.random()*8)+1;	
+			x = (int)(Math.random()*4);
+			y = (int)(Math.random()*4);
+			orientation = (int)(Math.random()*9);	
 		}while(!placementPiece(x, y, orientation, plateau, charJoueur));
 		
 		if ( (int)(Math.random()*2)==1) {
@@ -508,8 +505,8 @@ public class MethodeJeuDeL {
 	
 		int[] tableauCoordonneesPieceJeton = chercherCoupGagnant(plateau, charJoueur);
 		if (tableauCoordonneesPieceJeton[8]==1) {
-			int xPiece = tableauCoordonneesPieceJeton[0]+1;
-			int yPiece = tableauCoordonneesPieceJeton[1]+1;
+			int xPiece = tableauCoordonneesPieceJeton[0];
+			int yPiece = tableauCoordonneesPieceJeton[1];
 			int orientationPiece = tableauCoordonneesPieceJeton[2];
 			placementPiece(xPiece, yPiece, orientationPiece, plateau, charJoueur);
 			
@@ -548,7 +545,7 @@ public class MethodeJeuDeL {
 		for(int x = 0; x<4 ; x++)  {
 			for (int y = 0; y<4 ;y++) {
 					for(int orientation=1;orientation<9 ;orientation++) {
-						if(placementPiece(x+1, y+1, orientation, plateauDeTest, charJoueur)) {
+						if(placementPiece(x, y, orientation, plateauDeTest, charJoueur)) {
 							if(charJoueur=='2') {
 								charJoueur='1';
 							}
@@ -679,7 +676,7 @@ public class MethodeJeuDeL {
 			int xPiece = meilleurCoup[0];
 			int yPiece = meilleurCoup[1];
 			int orientationPiece = meilleurCoup[2];
-			placementPiece(xPiece+1, yPiece+1, orientationPiece, plateau, charJoueur);
+			placementPiece(xPiece, yPiece, orientationPiece, plateau, charJoueur);
 			int xJeton=meilleurCoup[3];
 			int yJeton=meilleurCoup[4];
 			int nouveauXJeton=meilleurCoup[5];
@@ -698,7 +695,7 @@ public class MethodeJeuDeL {
 			for (int y = 0; y<4 ;y++) {
 				for(int orientation=1;orientation<9 ;orientation++) {
 					char[][] plateauDeTest = copiePlateau(plateau);
-					if(placementPiece(x+1, y+1, orientation, plateauDeTest, charJoueur)) {
+					if(placementPiece(x, y, orientation, plateauDeTest, charJoueur)) {
 						if(evaluationPiece(plateauDeTest, charJoueur)>meilleurEvaluation) {
 							meilleurEvaluation = evaluationPiece(plateauDeTest, charJoueur);
 							evaluation[0] = x;
